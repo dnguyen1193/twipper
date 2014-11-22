@@ -17,11 +17,15 @@ class TweetsController < ApplicationController
 		#saves it to database; same as @tweet = Tweet.create(tweet_params) w/ our extra .user 
 		@tweet = Tweet.new(tweet_params)
 		@tweet.user = current_user
-		@tweet.save
+		if @tweet.save
+			flash[:success] = "You have successfully created a Tweet!"
+		else
+			flash[:danger] = "Input isn't correct. Please try again."
+		end
 
 		# give create an instance of all the tweets too -> or it can't render
 		@tweets = current_user.tweets
-		flash[:success] = "You have successfully created a Tweet!"
+		
 		#it doesn't need to be rendered on a new page -> just on the same page as the form, the new page
 		render 'new'
 	end
