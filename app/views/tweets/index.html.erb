@@ -1,0 +1,6 @@
+<h3>What has everyone else been up to?</h3>
+<ul>
+	<% @tweets.each do |tweet| %>
+		<li><%= tweet.user.email %> || <%= tweet.tweet %></li>
+	<% end %>
+</ul>

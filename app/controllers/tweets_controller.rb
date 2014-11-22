@@ -1,10 +1,15 @@
 class TweetsController < ApplicationController
+
+	before_action :authenticate_user!
+	#! -> usually means to raise an error; can also mean that you may be "doing something dangerous"
+
 	def new
 		#creates new instance of the object Tweet
 		#'@' -> means the view has an access to the variable
 		@tweet = Tweet.new
-		@tweets = Tweet.all
-		# this variable will hold all the tweets
+		@tweets = current_user.tweets
+		#only shows the tweets that belong to you
+		# @tweets = Tweet.all -> variable will hold all the tweets
 	end
 
 	# create doesn't have access to the object Tweet since it's not defined here
@@ -15,10 +20,14 @@ class TweetsController < ApplicationController
 		@tweet.save
 
 		# give create an instance of all the tweets too -> or it can't render
-		@tweets = Tweet.all
+		@tweets = current_user.tweets
 		flash[:success] = "You have successfully created a Tweet!"
 		#it doesn't need to be rendered on a new page -> just on the same page as the form, the new page
 		render 'new'
+	end
+
+	def index
+		@tweets = Tweet.all.reject {|tweet| tweet.user == current_user}
 	end
 
 	private
