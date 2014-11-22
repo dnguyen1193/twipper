@@ -9,14 +9,19 @@ class TweetsController < ApplicationController
 
 	# create doesn't have access to the object Tweet since it's not defined here
 	def create
-		#saves it to database
-		@tweet = Tweet.create(tweet_params)
+		#saves it to database; same as @tweet = Tweet.create(tweet_params) w/ our extra .user 
+		@tweet = Tweet.new(tweet_params)
+		@tweet.user = current_user
+		@tweet.save
+
 		# give create an instance of all the tweets too -> or it can't render
 		@tweets = Tweet.all
 		flash[:success] = "You have successfully created a Tweet!"
 		#it doesn't need to be rendered on a new page -> just on the same page as the form, the new page
 		render 'new'
 	end
+
+	private
 
 	def tweet_params
 		#requires the tweet object and only takes in the tweet string
