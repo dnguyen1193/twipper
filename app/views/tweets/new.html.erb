@@ -3,3 +3,16 @@
   <!-- :tweet is the same as putting 'tweet' -->
   <%= f.button :submit %>
 <% end %>
+
+<!-- %= -> outputs the results (returns a string that is outputted as HTML)
+	 %  -> doesn't output anything; just ends a loop or something           -->
+
+What have you Tweeted?
+<br><br>
+<uL>
+	<!-- |tweet| is what we're calling each object -->
+	<% @tweets.each do |tweet| %>
+		<!-- get the tweet string (attribute) in the tweet model -->
+		<li><%= tweet.tweet %></li>
+	<% end %>
+</ul>
