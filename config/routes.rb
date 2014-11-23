@@ -8,9 +8,13 @@ Rails.application.routes.draw do
 
   root 'static_pages#main_page' #this is a method! -> when we're on the static page controller, go to the main_page view
 
-  
+
 
   resources :tweets
+
+  resources :profiles #refers to the controller, not an individual profiles
+
+  resources :relationships, only: [:create]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
